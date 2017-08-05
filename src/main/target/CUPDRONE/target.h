@@ -19,13 +19,31 @@
 
 #define TARGET_BOARD_IDENTIFIER "CUPD" // CUPDRONE
 #define USE_HARDWARE_REVISION_DETECTION
+#define TARGET_CONFIG
 
 
 #define LED0_PIN                PB4
 #define LED1_PIN                PB5
 
-#undef BEEPER
 
+#undef BEEPER
+#undef USE_PWM
+#undef USE_PPM
+#undef LED_STRIP
+#undef TELEMETRY
+#undef TELEMETRY_FRSKY
+#undef TELEMETRY_HOTT
+#undef TELEMETRY_SMARTPORT
+#undef USE_RESOURCE_MGMT
+#undef USE_SERVOS
+#undef SERIAL_RX
+#undef USE_SERIALRX_CRSF       // Team Black Sheep Crossfire protocol
+#undef USE_SERIALRX_IBUS       // FlySky and Turnigy receivers
+#undef USE_SERIALRX_SBUS       // Frsky and Futaba receivers
+#undef USE_SERIALRX_SPEKTRUM   // SRXL, DSM2 and DSMX protocol
+#undef USE_SERIALRX_SUMD       // Graupner Hott protocol
+#undef USE_SERIALRX_SUMH       // Graupner legacy protocol
+#undef USE_SERIALRX_XBUS       // JR
 
 #define GYRO
 #define USE_GYRO_MPU6050
@@ -61,7 +79,6 @@
 
 
 
-
 #define BRUSHED_MOTORS
 #define DEFAULT_FEATURES        FEATURE_MOTOR_STOP
 //#define SKIP_SERIAL_PASSTHROUGH
@@ -69,11 +86,11 @@
 
 // Since the CJMCU PCB has holes for 4 motors in each corner we can save same flash space by disabling support for other mixers.
 #define USE_QUAD_MIXER_ONLY
-#undef USE_SERVOS
 
-#if (FLASH_SIZE <= 64)
-#undef BLACKBOX
-#endif
+
+
+//#undef BLACKBOX
+
 
 
 // IO - assuming all IOs on 48pin package TODO
@@ -81,5 +98,6 @@
 #define TARGET_IO_PORTB         0xffff
 #define TARGET_IO_PORTC         (BIT(13)|BIT(14)|BIT(15))
 
-#define USABLE_TIMER_CHANNEL_COUNT 5
-#define USED_TIMERS             	(TIM_N(1) | TIM_N(2) | TIM_N(3) | TIM_N(4))
+#define USABLE_TIMER_CHANNEL_COUNT 4
+//#define USED_TIMERS             	(TIM_N(1) | TIM_N(2) | TIM_N(3) | TIM_N(4))
+#define USED_TIMERS               (TIM_N(3) | TIM_N(4))

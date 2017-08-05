@@ -15,23 +15,40 @@
  * along with Cleanflight.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #include <platform.h>
-#include "drivers/io.h"
 
-#include "drivers/timer.h"
-#include "drivers/timer_def.h"
-#include "drivers/dma.h"
+#include "common/axis.h"
 
+#include "drivers/sensor.h"
+#include "drivers/compass/compass.h"
+#include "drivers/serial.h"
 
-const timerHardware_t timerHardware[USABLE_TIMER_CHANNEL_COUNT] = {
-  DEF_TIM(TIM3, CH1, PA6, TIM_USE_MOTOR, 1 ),  // PWM11 - OUT1
-  DEF_TIM(TIM3, CH4, PB1, TIM_USE_MOTOR, 1 ),  // PWM11 - OUT2
-  DEF_TIM(TIM3, CH2, PA7, TIM_USE_MOTOR, 1 ),  // PWM12 - OUT3
-  DEF_TIM(TIM4, CH2, PB7, TIM_USE_MOTOR, 1 ),  // PWM14 - OUT4
-};
+#include "fc/rc_controls.h"
 
+#include "flight/failsafe.h"
+#include "flight/mixer.h"
+#include "flight/pid.h"
 
+#include "rx/rx.h"
 
+#include "io/serial.h"
 
+#include "telemetry/telemetry.h"
+
+#include "sensors/sensors.h"
+#include "sensors/compass.h"
+#include "sensors/barometer.h"
+
+#include "config/feature.h"
+
+#include "fc/config.h"
+
+#ifdef TARGET_CONFIG
+void targetConfiguration(void)
+{
+    serialConfigMutable()->portConfigs[1].functionMask = FUNCTION_MSP;
+}
+#endif
