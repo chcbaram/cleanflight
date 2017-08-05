@@ -15,26 +15,35 @@
  * along with Cleanflight.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "../CJMCU/hardware_revision.h"
+
+#include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 
-#include <platform.h>
-#include "drivers/io.h"
+#include "platform.h"
 
-#include "drivers/timer.h"
-#include "drivers/timer_def.h"
-#include "drivers/dma.h"
+#include "build/build_config.h"
 
-
-const timerHardware_t timerHardware[USABLE_TIMER_CHANNEL_COUNT] = {
-  DEF_TIM(TIM2, CH1, PA0, TIM_USE_PWM,   0 ), // PWM1 - RC1
-
-  DEF_TIM(TIM3, CH1, PA6, TIM_USE_MOTOR, 1 ), // PWM11 - OUT1
-  DEF_TIM(TIM3, CH4, PB1, TIM_USE_MOTOR, 1 ), // PWM11 - OUT2
-  DEF_TIM(TIM3, CH2, PA7, TIM_USE_MOTOR, 1 ), // PWM12 - OUT3
-  DEF_TIM(TIM4, CH2, PB7, TIM_USE_MOTOR, 1 )  // PWM14 - OUT4
-
-};
+#include "drivers/io_types.h"
 
 
+uint8_t hardwareRevision = UNKNOWN;
 
+void detectHardwareRevision(void)
+{
+    if (GPIOC->IDR & GPIO_Pin_15) {
+        hardwareRevision = REV_2;
+    } else {
+        hardwareRevision = REV_1;
+    }
+}
 
+void updateHardwareRevision(void)
+{
+}
+
+ioTag_t selectMPUIntExtiConfigByHardwareRevision(void)
+{
+    return IO_TAG_NONE;
+}

@@ -15,26 +15,28 @@
  * along with Cleanflight.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdbool.h>
 #include <stdint.h>
 
-#include <platform.h>
-#include "drivers/io.h"
+#include "platform.h"
+#include "drivers/bus.h"
+#include "drivers/bus_i2c.h"
+#include "drivers/bus_spi.h"
+#include "io/serial.h"
 
-#include "drivers/timer.h"
-#include "drivers/timer_def.h"
-#include "drivers/dma.h"
+extern void spiPreInit(void); // XXX In fc/fc_init.c
 
+void targetBusInit(void)
+{
+#if defined(USE_SPI) && defined(USE_SPI_DEVICE_1)
+    spiPinConfigure();
+    spiPreInit();
+    spiInit(SPIDEV_1);
+#endif
 
-const timerHardware_t timerHardware[USABLE_TIMER_CHANNEL_COUNT] = {
-  DEF_TIM(TIM2, CH1, PA0, TIM_USE_PWM,   0 ), // PWM1 - RC1
-
-  DEF_TIM(TIM3, CH1, PA6, TIM_USE_MOTOR, 1 ), // PWM11 - OUT1
-  DEF_TIM(TIM3, CH4, PB1, TIM_USE_MOTOR, 1 ), // PWM11 - OUT2
-  DEF_TIM(TIM3, CH2, PA7, TIM_USE_MOTOR, 1 ), // PWM12 - OUT3
-  DEF_TIM(TIM4, CH2, PB7, TIM_USE_MOTOR, 1 )  // PWM14 - OUT4
-
-};
-
-
-
-
+    if (!doesConfigurationUsePort(SERIAL_PORT_USART3)) {
+        serialRemovePort(SERIAL_PORT_USART3);
+        i2cHardwareConfigure();
+        i2cInit(I2C_DEVICE);
+    }
+}
