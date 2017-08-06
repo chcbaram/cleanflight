@@ -376,8 +376,7 @@ all_clean: $(TARGETS_CLEAN)
 flash_$(TARGET): $(TARGET_HEX)
 	$(V0) stty -F $(SERIAL_DEVICE) raw speed 115200 -crtscts cs8 -parenb -cstopb -ixon
 	$(V0) echo -n 'R' >$(SERIAL_DEVICE)
-##	$(V0) stm32flash -w $(TARGET_HEX) -v -g 0x0 -b 115200 $(SERIAL_DEVICE)
-	$(V0) stm32flash -w $(TARGET_HEX) -v -g 0x0 -b 57600 $(SERIAL_DEVICE)
+	$(V0) stm32flash -w $(TARGET_HEX) -v -g 0x0 -b 115200 $(SERIAL_DEVICE)
 
 ## flash             : flash firmware (.hex) onto flight controller
 flash: flash_$(TARGET)

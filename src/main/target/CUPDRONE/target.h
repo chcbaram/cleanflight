@@ -36,7 +36,6 @@
 #undef TELEMETRY_SMARTPORT
 #undef USE_RESOURCE_MGMT
 #undef USE_SERVOS
-#undef SERIAL_RX
 #undef USE_SERIALRX_CRSF       // Team Black Sheep Crossfire protocol
 #undef USE_SERIALRX_IBUS       // FlySky and Turnigy receivers
 #undef USE_SERIALRX_SBUS       // Frsky and Futaba receivers
@@ -45,11 +44,20 @@
 #undef USE_SERIALRX_SUMH       // Graupner legacy protocol
 #undef USE_SERIALRX_XBUS       // JR
 
+//#define GYRO
+//#define USE_GYRO_MPU6050
+
+//#define ACC
+//#define USE_ACC_MPU6050
+
 #define GYRO
 #define USE_GYRO_MPU6050
+#define GYRO_MPU6050_ALIGN      CW0_DEG
 
 #define ACC
 #define USE_ACC_MPU6050
+#define ACC_MPU6050_ALIGN       CW0_DEG
+
 
 //#define MAG
 //#define USE_MAG_HMC5883
@@ -73,8 +81,13 @@
 
 
 
-#define DEFAULT_RX_FEATURE      FEATURE_RX_MSP
-#define USE_RX_MSP
+#define USE_SERIALRX_TARGET_CUSTOM
+#define SERIALRX_UART           SERIAL_PORT_USART2
+#define SERIALRX_PROVIDER       SERIALRX_TARGET_CUSTOM
+#define RX_CHANNELS_TAER
+
+#define DEFAULT_RX_FEATURE      FEATURE_RX_SERIAL
+
 
 
 
@@ -98,6 +111,6 @@
 #define TARGET_IO_PORTB         0xffff
 #define TARGET_IO_PORTC         (BIT(13)|BIT(14)|BIT(15))
 
-#define USABLE_TIMER_CHANNEL_COUNT 4
-//#define USED_TIMERS             	(TIM_N(1) | TIM_N(2) | TIM_N(3) | TIM_N(4))
-#define USED_TIMERS               (TIM_N(3) | TIM_N(4))
+#define USABLE_TIMER_CHANNEL_COUNT 14
+#define USED_TIMERS             	(TIM_N(1) | TIM_N(2) | TIM_N(3) | TIM_N(4))
+

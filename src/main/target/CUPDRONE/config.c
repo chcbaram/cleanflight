@@ -21,6 +21,8 @@
 #include <platform.h>
 
 #include "common/axis.h"
+#include "common/maths.h"
+
 
 #include "drivers/sensor.h"
 #include "drivers/compass/compass.h"
@@ -45,10 +47,25 @@
 #include "config/feature.h"
 
 #include "fc/config.h"
+#include "fc/controlrate_profile.h"
+#include "fc/rc_modes.h"
+#include "fc/rc_controls.h"
+
 
 #ifdef TARGET_CONFIG
 void targetConfiguration(void)
 {
     serialConfigMutable()->portConfigs[1].functionMask = FUNCTION_MSP;
+
+    modeActivationConditionsMutable(0)->modeId          = BOXANGLE;
+    modeActivationConditionsMutable(0)->auxChannelIndex = AUX4 - NON_AUX_CHANNEL_COUNT;
+    modeActivationConditionsMutable(0)->range.startStep = CHANNEL_VALUE_TO_STEP(900);
+    modeActivationConditionsMutable(0)->range.endStep   = CHANNEL_VALUE_TO_STEP(2000);
+
+    modeActivationConditionsMutable(1)->modeId          = BOXHEADFREE;
+    modeActivationConditionsMutable(1)->auxChannelIndex = AUX1 - NON_AUX_CHANNEL_COUNT;
+    modeActivationConditionsMutable(1)->range.startStep = CHANNEL_VALUE_TO_STEP(1500);
+    modeActivationConditionsMutable(1)->range.endStep   = CHANNEL_VALUE_TO_STEP(2100);
+
 }
 #endif
