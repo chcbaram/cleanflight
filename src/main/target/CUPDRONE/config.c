@@ -69,7 +69,8 @@ void targetConfiguration(void)
     modeActivationConditionsMutable(1)->range.endStep   = CHANNEL_VALUE_TO_STEP(2100);
 
 
-    motorConfigMutable()->dev.motorPwmRate = BRUSHED_MOTORS_PWM_RATE;
+    //mixerConfig()->yaw_motors_reversed = true;
+    mixerConfigMutable()->yaw_motors_reversed = true;
 
     pidProfilesMutable(0)->pid[PID_ROLL].P  = 40;
     pidProfilesMutable(0)->pid[PID_ROLL].I  = 0;
