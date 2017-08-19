@@ -22,6 +22,7 @@
 #define TARGET_CONFIG
 
 
+
 #define LED0_PIN                PB4
 #define LED1_PIN                PB5
 
@@ -43,6 +44,8 @@
 #undef USE_SERIALRX_SUMD       // Graupner Hott protocol
 #undef USE_SERIALRX_SUMH       // Graupner legacy protocol
 #undef USE_SERIALRX_XBUS       // JR
+#undef MAG
+
 
 //#define GYRO
 //#define USE_GYRO_MPU6050
@@ -62,12 +65,17 @@
 //#define MAG
 //#define USE_MAG_HMC5883
 
+
+
 #define USE_EXTI
 #define MPU_INT_EXTI            PC14
 #define USE_MPU_DATA_READY_SIGNAL
 
 
 #define BRUSHED_MOTORS
+
+#define MAX_SUPPORTED_MOTORS    4
+
 
 #define USE_VCP
 #define USE_UART1
@@ -102,6 +110,7 @@
 
 
 
+
 //#undef BLACKBOX
 
 
@@ -111,6 +120,6 @@
 #define TARGET_IO_PORTB         0xffff
 #define TARGET_IO_PORTC         (BIT(13)|BIT(14)|BIT(15))
 
-#define USABLE_TIMER_CHANNEL_COUNT 14
+#define USABLE_TIMER_CHANNEL_COUNT 4
 #define USED_TIMERS             	(TIM_N(1) | TIM_N(2) | TIM_N(3) | TIM_N(4))
 

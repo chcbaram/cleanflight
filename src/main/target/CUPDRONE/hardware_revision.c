@@ -37,6 +37,12 @@ void detectHardwareRevision(void)
 
     IOLo(usbPin);
     //IOHi(usbPin);
+
+
+
+    usbPin = IOGetByTag(IO_TAG(PA6));
+    IOConfigGPIO(usbPin, IOCFG_AF_PP);
+
 }
 
 void updateHardwareRevision(void)

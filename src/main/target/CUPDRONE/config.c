@@ -50,6 +50,7 @@
 #include "fc/controlrate_profile.h"
 #include "fc/rc_modes.h"
 #include "fc/rc_controls.h"
+#include "target.h"
 
 
 #ifdef TARGET_CONFIG
@@ -66,6 +67,18 @@ void targetConfiguration(void)
     modeActivationConditionsMutable(1)->auxChannelIndex = AUX1 - NON_AUX_CHANNEL_COUNT;
     modeActivationConditionsMutable(1)->range.startStep = CHANNEL_VALUE_TO_STEP(1500);
     modeActivationConditionsMutable(1)->range.endStep   = CHANNEL_VALUE_TO_STEP(2100);
+
+
+    motorConfigMutable()->dev.motorPwmRate = BRUSHED_MOTORS_PWM_RATE;
+
+    pidProfilesMutable(0)->pid[PID_ROLL].P  = 40;
+    pidProfilesMutable(0)->pid[PID_ROLL].I  = 0;
+    pidProfilesMutable(0)->pid[PID_ROLL].D  = 30;
+    pidProfilesMutable(0)->pid[PID_PITCH].P = 58;
+    pidProfilesMutable(0)->pid[PID_PITCH].I = 0;
+    pidProfilesMutable(0)->pid[PID_PITCH].D = 35;
+
+    pidProfilesMutable(0)->pid[PID_YAW].I = 0;
 
 }
 #endif
